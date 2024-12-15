@@ -1,0 +1,27 @@
+{
+  "name": "course-seller",
+  "version": "1.0.0",
+  "description": "hey this is a course selling website , which i have built for learning purpose. This foucus more on the backend.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shreyashdeep/course-seller.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shreyashdeep/course-seller/issues"
+  },
+  "homepage": "https://github.com/Shreyashdeep/course-seller#readme",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "middleware": "^1.0.0",
+    "mongoose": "^8.9.0"
+  }
+}
