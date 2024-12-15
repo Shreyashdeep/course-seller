@@ -1,15 +1,19 @@
+const {Router}= require("express");
+const courseRouter= Router();
 
-
-function createCourseRoutes(app){
+courseRouter.post("/purchase", function(req, res){
+    res.json({
+        message: " signup endpoint"
+    })
     
-    app.post("/course/purchase", function(req, res){
-
+})
+courseRouter.get("/preview", function(req, res){
+    res.json({
+        message: "course preview endpoint"
     })
-    app.get("/course/preview", function(req, res){
 
-    })
-}
+})
 
 module.exports ={
-    createCourseRoutes: createCourseRoutes
+    courseRouter: courseRouter
 }
