@@ -3,6 +3,8 @@ const userRouter= Router();
 import { userModel } from "../db.js";
 import { z } from "zod";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+const JWT_USER_PASSWORD= "shreyash"
 
 userRouter.post("/signup",async function(req, res){
     const requireBody= z.object({
@@ -36,10 +38,35 @@ userRouter.post("/signup",async function(req, res){
 
     
 })
-userRouter.post("/signin", function(req, res){
-    res.json({
-        message: "signin endpoint"
+userRouter.post("/signin", async function(req, res){
+    const {email, password}= req.body;
+    // how to check hashed password matches or not
+    const user= await userModel.findOne({
+        email: email
     })
+    if (user) {
+        // Compare the plain-text password with the hashed password in the database
+        bcrypt.compare(password, user.password, (err, result) => {
+            if (err) {
+                return res.status(500).json({ message: "Internal server error" });
+            }
+
+            if (result) {
+                // Password matches, generate JWT token
+                const token = jwt.sign(
+                    { id: user._id },
+                    JWT_USER_PASSWORD);
+                return res.json({ token });
+            } else {
+                // Password does not match
+                return res.status(403).json({ message: "Incorrect credentials" });
+            }
+        });}else{
+
+        res.status(403).json({
+            message: "incorrect credentials"
+        })
+    }
 
 })
 userRouter.get("/purchasedCourse", function(req, res){
