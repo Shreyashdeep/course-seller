@@ -4,7 +4,8 @@ import { adminModel } from "../db.js";
 import bcrypt from "bcrypt";
 import {z} from 'zod';
 import jwt from "jsonwebtoken";
-const JWT_ADMIN_PASSWORD= "deep122334"
+import { JWT_ADMIN_PASSWORD } from "../config.js";
+import { adminMiddleware } from "../middleware/admin.js";
 
 adminRouter.post("/signup", async function(req, res){
     const requireBody= z.object({
@@ -69,7 +70,7 @@ adminRouter.post("/signin", async function(req, res){
 
 
 })
-adminRouter.post("/course", function(req, res){
+adminRouter.post("/course",adminMiddleware,async function(req, res){
 
 })
 adminRouter.put("/course", function(req, res){

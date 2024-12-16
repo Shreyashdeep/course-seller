@@ -4,7 +4,7 @@ import { userModel } from "../db.js";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-const JWT_USER_PASSWORD= "shreyash"
+import { JWT_USER_PASSWORD } from "../config.js";
 
 userRouter.post("/signup",async function(req, res){
     const requireBody= z.object({
