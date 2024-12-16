@@ -1,19 +1,25 @@
-const express=require("express");
-const jwt= require("jsonwebtoken")
-const mongoose=require("mongoose");
-require('dotenv').config();
-const { userRouter} = require("./routes/user")
-const { courseRouter}= require("./routes/course");
-const { adminRouter } = require("./routes/admin");
+import express, { json } from "express";
+import jwt from "jsonwebtoken";
+// require('dotenv').config();
+import { userRouter } from "./routes/user.js";
+import { courseRouter } from "./routes/course.js";
+import { adminRouter } from "./routes/admin.js";
+import mongoose from "mongoose";
+
+// Destructure Schema and ObjectId for ease of use
+const { Schema, Types: { ObjectId } } = mongoose;
 
 const app= express();
-app.use(express.json());
-mongoose.connect(process.env.MONGO_URI);
+app.use(json());
+mongoose.connect("mongodb+srv://shreyashdeep20:tflPUrug0pfD57ra@cluster0.zzydh.mongodb.net/course-selling-app-database");
 app.use("/api/v1/user",userRouter);
 app.use("/api/v1/course",courseRouter);
 app.use("/api/v1/admin",adminRouter);
 
 
+async function main() {
+    await mongoose.connect("mongodb+srv://shreyashdeep20:tflPUrug0pfD57ra@cluster0.zzydh.mongodb.net/course-selling-app-database");
+    app.listen(3000);
+}
 
-
-app.listen(3001);
+main()

@@ -1,21 +1,20 @@
-const {Router} =require("express");
+import { Router } from "express";
 const adminRouter=Router(); 
+import { adminModel } from "../db.js";
 adminRouter.post("/signup", function(req, res){
 
 })
 adminRouter.post("/signin", function(req, res){
 
 })
-adminRouter.post("/createCourse", function(req, res){
+adminRouter.post("/course", function(req, res){
 
 })
 adminRouter.put("/course", function(req, res){
 
 })
-adminRouter.get("/bulk", function(req, res){
+adminRouter.get("/course/bulk", function(req, res){
 
 })
 
-module.exports={
-    adminRouter: adminRouter
-}
+export {adminRouter};
