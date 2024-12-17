@@ -1,6 +1,6 @@
 import { Router } from "express";
 const adminRouter=Router(); 
-import { adminModel } from "../db.js";
+import { adminModel, courseModel } from "../db.js";
 import bcrypt from "bcrypt";
 import {z} from 'zod';
 import jwt from "jsonwebtoken";
@@ -71,12 +71,43 @@ adminRouter.post("/signin", async function(req, res){
 
 })
 adminRouter.post("/course",adminMiddleware,async function(req, res){
+    const adminId= req.userId;
+    const { title, description, imageUrl, price}=req.body;
+
+    const course= await courseModel.create({
+        title, description, imageUrl, price,creatorId: adminId
+     })
+     res.json({
+        message: "course created",
+        courseId: course._id
+     })
 
 })
-adminRouter.put("/course", function(req, res){
+adminRouter.put("/course", adminMiddleware,async function(req, res){
+    const adminId= req.userId;
+    const { title, description, imageUrl, price, courseId}=req.body;
+
+    const course= await courseModel.updateOne({_id: courseId, creatorId: adminId},{
+        title, description, imageUrl, price,courseId
+     })
+     res.json({
+        message: "course created",
+        courseId: course._id
+     })
+
 
 })
-adminRouter.get("/course/bulk", function(req, res){
+adminRouter.get("/course/bulk",async function(req, res){
+    const adminId= req.userId;
+
+    const courses= await courseModel.updateOne({
+        courseId: adminId
+     })
+     res.json({
+        message: "course created",
+        courses
+     })
+
 
 })
 
