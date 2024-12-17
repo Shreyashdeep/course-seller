@@ -1,10 +1,11 @@
 import { Router } from "express";
 const userRouter= Router();
-import { userModel } from "../db.js";
+import { courseModel, purchaseModel, userModel } from "../db.js";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { JWT_USER_PASSWORD } from "../config.js";
+import { userMiddleware } from "../middleware/user.js";
 
 userRouter.post("/signup",async function(req, res){
     const requireBody= z.object({
@@ -69,7 +70,18 @@ userRouter.post("/signin", async function(req, res){
     }
 
 })
-userRouter.get("/purchasedCourse", function(req, res){
+userRouter.get("/purchases",userMiddleware, async function(req, res){
+    const userId= req.userId;
+    const purchases= await purchaseModel.find({
+        userId
+    })
+    const courseData= await courseModel.find({
+        _id:{$in: purchases.map(x=> x.courseId)}
+    })
+    res.json({
+        purchases,
+        cour
+    })
     
 })
 
